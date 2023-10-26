@@ -1,0 +1,7 @@
+<launch> 
+
+<!-- Start Gazebo simulation -->
+<include file="$(find fetch_gazebo)/launch/simple_grasp.launch"/>
+
+</launch>
+

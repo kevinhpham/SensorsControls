@@ -1,0 +1,11 @@
+<launch>
+  <!-- Start MoveIt -->
+  <include file="$(find fetch_moveit_config)/launch/move_group.launch" >
+    <arg name="info" value="true"/><!-- publish grasp markers -->
+  </include>
+
+
+  <!-- Drive to the table, pick stuff up -->
+  <node name="demo" pkg="my_fetch" type="pick_place.py" output="screen" />
+
+</launch>
