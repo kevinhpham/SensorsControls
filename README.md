@@ -8,16 +8,16 @@ To launch the demo, use "roslaunch my_fetch gazebo_sim.launch" in a shell then w
 This project was built for Ubuntu 18.04 and Ros melodic.
 
 # Packages used
-MoveIt from http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/getting_started/getting_started.html(binary install)
+MoveIt from http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/getting_started/getting_started.html (binary install)
   Used to perform joint path planning and to control the robot arm
 
-moveit_visual_tools from https://github.com/ros-planning/moveit_visual_tools(source install)
+moveit_visual_tools from https://github.com/ros-planning/moveit_visual_tools (source install)
   Used to help visualize path planning for the robot arm in Rviz
 
 Fetch gazebo from https://docs.fetchrobotics.com/gazebo.html (binary install)
   Used to launch simulated fetch robot in gazebo
 
-Fetch_ros from https://github.com/ZebraDevs/fetch_ros(source install)
+Fetch_ros from https://github.com/ZebraDevs/fetch_ros (source install)
   Used for fetch_moveit_config to connect fetch robot to moveit interface.
 
 My_fetch created by the group
