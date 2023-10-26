@@ -20,6 +20,8 @@ Fetch gazebo from https://docs.fetchrobotics.com/gazebo.html (binary install)
 Fetch_ros from https://github.com/ZebraDevs/fetch_ros(source install)
   Used for fetch_moveit_config to connect fetch robot to moveit interface.
 
+My_fetch created by the group
+  Contains code created by our team to launch gazebo simulation and to get the fetch robot to perform a pick and place task. Also contains testing files based on code from the moveit tutorials that the   team used to learn how to use the moveit packages.
 
 
 
