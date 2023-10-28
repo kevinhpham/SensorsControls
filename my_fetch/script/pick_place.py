@@ -67,36 +67,38 @@ class PointHeadClient(object):
         self.client.send_goal(goal)
         self.client.wait_for_result()
 
+#controlls closing and opening gripper
 class GripperClient(object):
     def __init__(self):
         self.client = actionlib.SimpleActionClient("gripper_controller/gripper_action", GripperCommandAction)
         rospy.loginfo("Waiting for gripper_controller...")
         self.client.wait_for_server()
 
-    def closeGrip(self):
+    def closeGrip(self):                            #Send command to robot gripper to close hand
         goal = GripperCommandGoal()
         goal.command.position = 0.0
         goal.command.max_effort = 70.0
         self.client.send_goal(goal)
         self.client.wait_for_result()
 
-    def openGrip(self):
+    def openGrip(self):                            #Send command to robot gripper to open hand
         goal = GripperCommandGoal()
         goal.command.position = 0.1
         self.client.send_goal(goal)
         self.client.wait_for_result()
 
-# Tools for grasping
-class GraspingClient(object):
+#moves arm to poses inorder to pick up cube
+class ArmController(object):
 
     def __init__(self):
         self.scene = PlanningSceneInterface("base_link")
         self.pickplace = PickPlaceInterface("arm", "gripper", verbose=True)
         self.move_group = MoveGroupInterface("arm", "base_link")
+        self.arm_joints = ["shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
+                  "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
 
     def startPose(self):
-        joints = ["shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
-                  "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+        joints = self.arm_joints
         pose = [1.57, 0, 0, -1.57, 0.0, 0, 0.0]
         while not rospy.is_shutdown():
             result = self.move_group.moveToJointPosition(joints, pose, 0.02)
@@ -104,8 +106,7 @@ class GraspingClient(object):
                 return
             
     def ApproachPose(self):
-        joints = ["shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
-                  "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+        joints = self.arm_joints
         pose = [-.384, -0.593, 1.87, 1.22, -1.13, 1.95, 0.99]
         while not rospy.is_shutdown():
             result = self.move_group.moveToJointPosition(joints, pose, 0.02)
@@ -113,8 +114,7 @@ class GraspingClient(object):
                 return
             
     def pickupPose(self):
-        joints = ["shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
-                  "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+        joints = self.arm_joints
         pose = (-0.38, -0.45, 1.8, 1.27, -1.169, 1.9, 0.977)
         while not rospy.is_shutdown():
             result = self.move_group.moveToJointPosition(joints, pose, 0.02)
@@ -123,7 +123,6 @@ class GraspingClient(object):
 
     def approachPlace(self):
         gripper_frame = 'gripper_link'
-        gripper_pose = Pose(Point(0.7, -0.2, 0.8), Quaternion(0.01, 0.0, 0.0, 1.0)),
         gripper_pose = PoseStamped()
         gripper_pose.header.frame_id ='base_link'
         gripper_pose.header.stamp = rospy.Time.now()
@@ -134,8 +133,7 @@ class GraspingClient(object):
                 return   
 
     def tuck(self):
-        joints = ["shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
-                  "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+        joints = self.arm_joints
         pose = [1.32, 1.40, -0.2, 1.72, 0.0, 1.66, 0.0]
         while not rospy.is_shutdown():
             result = self.move_group.moveToJointPosition(joints, pose, 0.02)
@@ -143,8 +141,7 @@ class GraspingClient(object):
                 return
 
     def stow(self):
-        joints = ["shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
-                  "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
+        joints = self.arm_joints
         pose = [1.32, 0.7, 0.0, -2.0, 0.0, -0.57, 0.0]
         while not rospy.is_shutdown():
             result = self.move_group.moveToJointPosition(joints, pose, 0.02)
@@ -164,20 +161,21 @@ if __name__ == "__main__":
     #torso_action = FollowTrajectoryClient("torso_controller", ["torso_lift_joint"])
     head_action = PointHeadClient()
     gripper_client = GripperClient()
-    grasping_client = GraspingClient()
+    arm_controller = ArmController()
     cube_in_grapper = False
-    grasping_client.stow()
+    arm_controller.stow()
 
-    head_action.look_at(1.2, 0.0, 0.0, "base_link")
+    head_action.look_at(1.4, 0.0, 0.0, "base_link")
     gripper_client.openGrip()
-    grasping_client.startPose()
-    grasping_client.ApproachPose()
-    grasping_client.pickupPose()
+    arm_controller.startPose()
+    arm_controller.ApproachPose()
+    arm_controller.pickupPose()
     gripper_client.closeGrip()
-    grasping_client.ApproachPose()
-    grasping_client.startPose()
-    grasping_client.approachPlace()
+    arm_controller.ApproachPose()
+    head_action.look_at(1.4, 0.0, 0.3, "base_link")
+    arm_controller.startPose()
+    arm_controller.approachPlace()
     gripper_client.openGrip()
-    grasping_client.stow()
+    arm_controller.stow()
     rospy.loginfo("Demo Complete!")
 
