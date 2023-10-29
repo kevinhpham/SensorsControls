@@ -1,12 +1,38 @@
 #!/usr/bin/env python
 
+# Copyright (c) 2015, Fetch Robotics Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the Fetch Robotics Inc. nor the names of its
+#       contributors may be used to endorse or promote products derived from
+#       this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL FETCH ROBOTICS INC. BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Author: Michael Ferguson
+# Author: Di Sun
+
 import copy
 import actionlib
 import rospy
 import math
-import tf
-import roslib
-import time
 from math import sin, cos
 from moveit_python import (MoveGroupInterface,
                            PlanningSceneInterface,
@@ -21,35 +47,6 @@ from geometry_msgs.msg import PoseStamped,Pose,Point,Quaternion
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from moveit_msgs.msg import PlaceLocation, MoveItErrorCodes, Grasp
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-
-# Used to recieve information about the pickup object pose and convert it to other frames
-#Currently does not work, need to implement object pose detection system first
-class ObjectTransformer(object):
-
-    def __init__(self):
-        self.tflistener = tf.TransformListener()
-        rospy.loginfo("Waiting for transformlistener...")
-        time.sleep(1)
-
-    #Function to convert object pose from camera to base_link of robot
-    def poseConverter(self):
-        rospy.loginfo("Converting pose of object")
-        camera_frame = "head_camera_link"
-        object_pose = PoseStamped()
-        object_pose.header.frame_id = camera_frame
-        object_pose.header.stamp = rospy.Time.now()
-        object_pose.pose = Pose(Point(0, 0, 0), Quaternion(0.0, 0.0, 0.0, 1.0)) #currently uses hardcoded value, replace once object detection is working
-        while not rospy.is_shutdown():
-            try:
-                new_pose = self.tflistener.transformPose("base_link",object_pose,)
-                break
-            except (tf.ConnectivityException , tf.ConnectivityException, tf.ExtrapolationException):
-                continue
-
-        rospy.loginfo('Pose of object in base_link frame:')
-        rospy.loginfo(new_pose)
-        return new_pose
-
 
 # Point the head using controller
 class PointHeadClient(object):
@@ -165,12 +162,10 @@ if __name__ == "__main__":
     head_action = PointHeadClient()
     gripper_client = GripperClient()
     arm_controller = ArmController()
-    cube_transformer = ObjectTransformer()
     cube_in_grapper = False
-    cube_transformer.poseConverter()  #Gets the pose of the object to pick up, currently not functional
     arm_controller.stow()
 
-    head_action.look_at(1.4, 0.0, 0.0, "base_link") #point camera to table
+    head_action.look_at(1.4, 0.0, 0.0, "base_link")
     gripper_client.openGrip()
     arm_controller.startPose()
     arm_controller.ApproachPose()
