@@ -6,7 +6,7 @@ This repository contains some of the packages that were created and sourced onli
 
 To launch the demo, use "roslaunch my_fetch gazebo_sim.launch" in a shell then wait until the gazebo simulation is open. Afterwards, open another shell and use "roslaunch my_fetch pick_place_demo.launch" to start the pick and place demo.
 
-Paul Morian - Produced gazebo simulation and related launch files of environment (40% contribution)
+Paul Morian 12907578 - Produced gazebo simulation and related launch files of environment (40% contribution)
 
 Ste Ven Lee 99141893 - Produced object detection system and pose estimation (unfinished) (20% contribution)
 
