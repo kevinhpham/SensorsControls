@@ -3,19 +3,19 @@ FetchRobotPickandPlace
 
 Launches a gazebo simulation of the fetch robot in a simple 3d environment. In this environment, the fetch robot picks up a blue cube on a table and moves it around before placing it back down onto the table.
 
-This repository contains some of the packages that were created and sourced online from other people. The package My_fetch contains all of the code and files that our group produced for this project.
+This repository contains some of the packages that were created and sourced online from other people. The package my_fetch contains all of the code and files that our group produced for this project.
 The object detection system is located in my_fetch/objectDetection
 
 World files for gazebo simulations in my_fetch/worlds
 
-my_fetch models contains models for simulation environment from online
+my_fetch/models contains models for simulation environment from online
 
 my_fetch/script contains control system for fetch robot
 
 my_fetech/launch contains related launch files to start the demo.
 To launch the demo, use "roslaunch my_fetch gazebo_sim.launch" in a shell then wait until the gazebo simulation is open. Afterwards open another shell and use "roslaunch my_fetch pick_place_demo.launch" to start the pick and place control system demo.
 
-Code uses world files to launch a gazebo simulation with the fetch robot in a 3d environment. Plan to use object detection based on the fetch's RGBD camera to detech poses of cube in environment but was unfinished. Robot control system would then control fetch robot to pick up objects.
+Code uses world files to launch a gazebo simulation with the fetch robot in a 3d environment. Plan to use object detection based on the fetch's RGBD camera to detect poses of cube in environment but was unfinished. Robot control system would then control fetch robot to pick up objects.
 
 Paul Morian 12907578 - Produced gazebo simulation and related launch files of environment (40% contribution)
 
