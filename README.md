@@ -8,9 +8,9 @@ To launch the demo, use "roslaunch my_fetch gazebo_sim.launch" in a shell then w
 
 Paul Morian 12907578 - Produced gazebo simulation and related launch files of environment (40% contribution)
 
-Ste Ven Lee 99141893 - Produced object detection system and pose estimation (unfinished) (20% contribution)
+Ste Ven Lee 99141893 - Produced object detection system and pose estimation (unfinished) (10% contribution)
 
-Hoang Nam Kevin Pham 14306233 - Produced Robot control system, (40% contribution)
+Hoang Nam Kevin Pham 14306233 - Produced Robot control system, (50% contribution)
 
 This project was built for Ubuntu 18.04 and Ros melodic.
 
