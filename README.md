@@ -1,7 +1,8 @@
 # SensorsControls
 FetchRobotPickandPlace
 
-Launches a gazebo simulation of the fetch robot in a simple 3d environment. In this environment, the fetch robot picks up a blue cube on a table and moves it   around before placing it back down onto the table.
+Launches a gazebo simulation of the fetch robot in a simple 3d environment. In this environment, the fetch robot picks up a blue cube on a table and moves it around before placing it back down onto the table.
+This repository contains some of the packages that were created and sourced online from other people. The package My_fetch contains all of the code and files that our group produced for this project.
 
 To launch the demo, use "roslaunch my_fetch gazebo_sim.launch" in a shell then wait until the gazebo simulation is open. Afterwards, open another shell and use "roslaunch my_fetch pick_place_demo.launch" to start the pick and place demo.
 
@@ -21,9 +22,11 @@ Fetch_ros,fetch_description,fetch_teleop,fetch_moveit_config from https://github
   Used to connect fetch robot to moveit interface.
 
 My_fetch created by the group
-  Contains code created by our team to launch gazebo simulation and to get the fetch robot to perform a pick and place task. Also contains testing files based on code from the moveit tutorials that the   team used to learn how to use the moveit packages.
+  Contains code created by our team to launch gazebo simulation and to get the fetch robot to perform a pick and place task. Also contains testing files based on code from the moveit tutorials that the team used to learn how to use the moveit packages.
 
-
+Paul Morian - Produced gazebo simulation and related launch files of environment
+Ste Ven Lee - Produced object detection system and pose estimation (unfinished)
+Hoang Nam Kevin Pham - Produced Robot control system
 
 
 
