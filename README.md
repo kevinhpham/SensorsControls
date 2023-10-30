@@ -6,7 +6,15 @@ This repository contains some of the packages that were created and sourced onli
 
 To launch the demo, use "roslaunch my_fetch gazebo_sim.launch" in a shell then wait until the gazebo simulation is open. Afterwards, open another shell and use "roslaunch my_fetch pick_place_demo.launch" to start the pick and place demo.
 
+Paul Morian - Produced gazebo simulation and related launch files of environment (40% contribution)
+
+Ste Ven Lee 99141893 - Produced object detection system and pose estimation (unfinished) (20% contribution)
+
+Hoang Nam Kevin Pham 14306233 - Produced Robot control system, (40% contribution)
+
 This project was built for Ubuntu 18.04 and Ros melodic.
+
+
 
 # Packages used
 MoveIt from http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/getting_started/getting_started.html (binary install)
@@ -24,9 +32,6 @@ Fetch_ros,fetch_description,fetch_teleop,fetch_moveit_config from https://github
 My_fetch created by the group
   Contains code created by our team to launch gazebo simulation and to get the fetch robot to perform a pick and place task. Also contains testing files based on code from the moveit tutorials that the team used to learn how to use the moveit packages.
 
-Paul Morian - Produced gazebo simulation and related launch files of environment
-Ste Ven Lee - Produced object detection system and pose estimation (unfinished)
-Hoang Nam Kevin Pham - Produced Robot control system
 
 
 
